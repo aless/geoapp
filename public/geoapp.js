@@ -2,7 +2,7 @@
   var initialize;
 
   initialize = function() {
-    var latlng, map, marker, myOptions;
+    var infowindow, latlng, map, marker, myOptions;
     latlng = new google.maps.LatLng(-33.43706, -70.634451);
     myOptions = {
       zoom: 11,
@@ -13,12 +13,15 @@
     marker = new google.maps.Marker({
       map: map
     });
+    infowindow = new google.maps.InfoWindow;
     return $("#geocodeBtn").bind('click', function() {
       return $.getJSON('/geocode?d=' + $("#address").attr('value'), function(coord) {
         latlng = new google.maps.LatLng(coord['lat'], coord['lng']);
         marker.setPosition(latlng);
-        map.setCenter(latlng);
-        return map.setZoom(15);
+        map.panTo(latlng);
+        map.setZoom(15);
+        infowindow.setContent(coord['txt']);
+        return infowindow.open(map, marker);
       });
     });
   };
