@@ -12,6 +12,7 @@ class MyAppTest < Test::Unit::TestCase
   def test_homepage
     get '/'
     assert last_response.ok?
+    assert last_response.body.include? "map_canvas"
   end
 
 end
