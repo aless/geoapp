@@ -11,11 +11,6 @@ get '/' do
   erb :geoapp
 end
 
-get "/geoapp.js" do
-  content_type "text/javascript"
-  coffee :map
-end
-
 get '/geocode' do
   content_type :json
 
