@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'sinatra'
-require 'coffee_script'
 require 'open-uri'
 require 'cgi'
 require 'json'
