@@ -21,4 +21,12 @@ class MyAppTest < Test::Unit::TestCase
     assert last_response.headers["Content-Type"].include? "text/javascript"
   end
 
+  def test_geocoding
+    addr = "Hernando de aguirre 201, Santiago, Chile"
+    coord = {"lat"=>-33.4198636, "lng"=>-70.6009387}
+
+    get "/geocode?d=" + CGI::escape(addr)
+    assert JSON.parse(last_response.body) == coord
+  end
+
 end
