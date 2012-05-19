@@ -14,12 +14,13 @@ initialize = () ->
 
   $("#geocodeBtn").bind 'click', () ->
     $.getJSON('/geocode?d=' + $("#address").attr('value'), (coord) ->
-      latlng = new google.maps.LatLng(coord['lat'], coord['lng'])
-      marker.setPosition(latlng)
-      map.panTo(latlng)
-      map.setZoom(15)
-      infowindow.setContent(coord['txt'])
-      infowindow.open(map, marker)
+      if coord['status'] == 'ok'
+        latlng = new google.maps.LatLng(coord['lat'], coord['lng'])
+        marker.setPosition(latlng)
+        map.panTo(latlng)
+        map.setZoom(15)
+        infowindow.setContent(coord['txt'])
+        infowindow.open(map, marker)
     )
 
 

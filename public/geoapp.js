@@ -16,12 +16,14 @@
     infowindow = new google.maps.InfoWindow;
     return $("#geocodeBtn").bind('click', function() {
       return $.getJSON('/geocode?d=' + $("#address").attr('value'), function(coord) {
-        latlng = new google.maps.LatLng(coord['lat'], coord['lng']);
-        marker.setPosition(latlng);
-        map.panTo(latlng);
-        map.setZoom(15);
-        infowindow.setContent(coord['txt']);
-        return infowindow.open(map, marker);
+        if (coord['status'] === 'ok') {
+          latlng = new google.maps.LatLng(coord['lat'], coord['lng']);
+          marker.setPosition(latlng);
+          map.panTo(latlng);
+          map.setZoom(15);
+          infowindow.setContent(coord['txt']);
+          return infowindow.open(map, marker);
+        }
       });
     });
   };

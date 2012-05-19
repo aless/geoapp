@@ -13,9 +13,15 @@ end
 get '/geocode' do
   content_type :json
 
-  c = open(GCURL + CGI::escape(params[:d])).read
-  r = JSON.parse(c)
-  coord = r['results'][0]['geometry']['location']
-  coord['txt'] = r['results'][0]['formatted_address']
+  coord = []
+  begin
+    c = open(GCURL + CGI::escape(params[:d])).read
+    r = JSON.parse(c)
+    coord = r['results'][0]['geometry']['location']
+    coord['txt'] = r['results'][0]['formatted_address']
+    coord['status'] = 'ok'
+  rescue JSON::ParserError, SocketError
+    coord['status'] = 'error'
+  end
   coord.to_json
 end
